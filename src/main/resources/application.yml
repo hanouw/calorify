@@ -41,3 +41,6 @@ iamport:
 file:
   #  dir: /Users/name/Documents/file/
   #  dir: C:\file\file\
+
+jwt:
+  key: SGVsbG9Kc29uV2ViVG9rZW5BdXRoZW50aWNhdGlvbktleVdpdGhTcHJpbmdCb29rUHJvamVjdFNlY3JldEtleQ
