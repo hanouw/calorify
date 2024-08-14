@@ -41,6 +41,7 @@ iamport:
 file:
   #  dir: /Users/name/Documents/file/
   #  dir: C:\file\file\
+  dir: C:\aaa_yonsei\Projects\calorifyData\saved\
 
 jwt:
   key: SGVsbG9Kc29uV2ViVG9rZW5BdXRoZW50aWNhdGlvbktleVdpdGhTcHJpbmdCb29rUHJvamVjdFNlY3JldEtleQ

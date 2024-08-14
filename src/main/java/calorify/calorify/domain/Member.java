@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Builder
 @Entity
@@ -36,7 +37,8 @@ public class Member {
 
     private double memWeight; //몸무게
 
-    private LocalDateTime memCreatedAt; //가입시기
+    @Builder.Default
+    private LocalDateTime memCreatedAt = LocalDateTime.now(); // 가입시기
 
     private String memStatMsg; //상태 메세지
 
@@ -44,6 +46,8 @@ public class Member {
     private MemType memType = MemType.valueOf("USER"); //회원 종류
 
     private String memImg; //회원 프로필 사진
+
+    private String memImgStored; //회원 프로필 사진 저장이름
 
     public Member formToMember(MemberForm memberForm){
 
@@ -56,6 +60,7 @@ public class Member {
         this.memBirth = memberForm.getMemBirth().atStartOfDay();
         this.memEmail = memberForm.getMemEmail();
         this.memNickname = memberForm.getMemNickname();
+        this.memSex = memberForm.getMemSex();
         return this;
     }
 }

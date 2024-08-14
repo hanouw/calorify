@@ -19,4 +19,5 @@ public class MemberForm {
     private LocalDate memBirth;
     private String memEmail;
     private String memNickname;
+    private String memSex;
 }

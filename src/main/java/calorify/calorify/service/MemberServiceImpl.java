@@ -1,8 +1,10 @@
 package calorify.calorify.service;
 
+import calorify.calorify.domain.Calendar;
 import calorify.calorify.domain.Member;
 import calorify.calorify.dto.MemberDTO;
 import calorify.calorify.dto.MemberForm;
+import calorify.calorify.repository.CalendarRepository;
 import calorify.calorify.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final CalendarRepository calendarRepository;
     private final PasswordEncoder passwordEncoder;
     private final EntityManager entityManager;
 
@@ -27,6 +30,10 @@ public class MemberServiceImpl implements MemberService{
     public Map<String, String> save(MemberForm memberForm) {
         Member member = new Member().formToMember(memberForm);
         Member saved = memberRepository.save(member);
+
+        Calendar calendar = new Calendar();
+        calendar.setMember(saved);
+        calendarRepository.save(calendar);
         return Map.of("success", saved.getMemId());
     }
 
