@@ -1,5 +1,6 @@
 package calorify.calorify.service;
 
+import calorify.calorify.domain.Meal;
 import calorify.calorify.dto.NutritionDTO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,5 +9,5 @@ import java.util.List;
 
 public interface MealService {
     String saveMeal(MultipartFile image, NutritionDTO nutrients, String memId) throws IOException;
-    void getMealByDate(String memId, String date);
+    List<List<Meal>> getMealByDate(String memId, String date);
 }

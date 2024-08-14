@@ -5,15 +5,21 @@ import calorify.calorify.domain.Meal;
 import calorify.calorify.domain.ProductFile;
 import calorify.calorify.dto.NutritionDTO;
 import calorify.calorify.repository.CalendarRepository;
-import calorify.calorify.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MealServiceImpl implements MealService{
 
@@ -39,8 +45,17 @@ public class MealServiceImpl implements MealService{
     }
 
     @Override
-    public void getMealByDate(String memId, String date) {
+    public List<List<Meal>> getMealByDate(String memId, String date) {
+        log.info("************* MealServiceImpl.java / method name : getMealByDate / memId : {}", memId);
+        log.info("************* MealServiceImpl.java / method name : getMealByDate / date : {}", date);
         Calendar calendarByMemId = calendarRepository.findCalendarByMemId(memId);
-//        calendarByMemId.getMealList().stream().filter(a -> a.getCalDate())
+        // yyyy-MM-dd 형식으로 포맷터 생성
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // MealList를 CalMealNum으로 그룹화하고, 그 결과를 List<List<Meal>>로 변환
+        return new ArrayList<>(calendarByMemId.getMealList().stream()
+                .filter(a -> Objects.equals(a.getCalDate().format(formatter), date))
+                .collect(Collectors.groupingBy(Meal::getCalMealNum)) // CalMealNum으로 그룹화
+                .values()); // Map의 값들만을 List로 변환
     }
 }

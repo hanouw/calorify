@@ -1,5 +1,6 @@
 package calorify.calorify.controller;
 
+import calorify.calorify.domain.Meal;
 import calorify.calorify.dto.NutritionDTO;
 import calorify.calorify.service.MealService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,9 +35,9 @@ public class MealController {
     }
 
     @GetMapping("/get/{memId}/{date}")
-    public Map<String, String> getMealByDate(@PathVariable String memId, @PathVariable String date){
-//        mealService.
-        return Map.of("RESULT", "SUCCESS");
+    public Map<String, List<List<Meal>>> getMealByDate(@PathVariable String memId, @PathVariable String date){
+        List<List<Meal>> mealByDate = mealService.getMealByDate(memId, date);
+        return Map.of("RESULT", mealByDate);
     }
 
 }
