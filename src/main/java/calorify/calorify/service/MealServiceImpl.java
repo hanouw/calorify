@@ -30,9 +30,9 @@ public class MealServiceImpl implements MealService{
     public String saveMeal(MultipartFile image, NutritionDTO nutrients, String memId) throws IOException {
         Calendar calendar = calendarRepository.findCalendarByMemId(memId);
 
-        Meal meal =  new Meal().dtoToEntity(nutrients);
+        Meal meal = new Meal().dtoToEntity(nutrients);
         meal.setCalDate(LocalDateTime.now());
-        meal.setCalMealNum(1);
+        meal.setCalMealNum(calendar.getMealList().size()+1);
 
         ProductFile savedFile = fileUploadService.saveFile(image);
 
