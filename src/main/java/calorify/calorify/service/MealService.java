@@ -8,6 +8,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface MealService {
-    String saveMeal(List<MultipartFile> image, List<NutritionDTO> nutrients, String memId) throws IOException;
+    String saveMeal(MultipartFile image, List<NutritionDTO> nutrients, String memId) throws IOException;
     List<List<Meal>> getMealByDate(String memId, String date);
 }

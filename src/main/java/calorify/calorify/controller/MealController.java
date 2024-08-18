@@ -24,7 +24,7 @@ public class MealController {
     private final MealService mealService;
 
     @PostMapping("/save")
-    public Map<String, String> saveMeal(@RequestParam("image") List<MultipartFile> image,
+    public Map<String, String> saveMeal(@RequestParam("image") MultipartFile image,
                                         @RequestParam("nutrients") String nutrientsJson,
                                         @RequestParam("memId") String memId) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
