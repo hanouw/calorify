@@ -27,19 +27,21 @@ public class MealServiceImpl implements MealService{
     private final CalendarRepository calendarRepository;
 
     @Override
-    public String saveMeal(MultipartFile image, NutritionDTO nutrients, String memId) throws IOException {
+    public String saveMeal(List<MultipartFile> image, List<NutritionDTO> nutrients, String memId) throws IOException {
         Calendar calendar = calendarRepository.findCalendarByMemId(memId);
+        int nowIndex = calendar.getMealList().size()+1;
+        for(int i = 0; i < image.size(); i++){
+            Meal meal = new Meal().dtoToEntity(nutrients.get(i));
+            meal.setCalDate(LocalDateTime.now());
+            meal.setCalMealNum(nowIndex);
 
-        Meal meal = new Meal().dtoToEntity(nutrients);
-        meal.setCalDate(LocalDateTime.now());
-        meal.setCalMealNum(calendar.getMealList().size()+1);
+            ProductFile savedFile = fileUploadService.saveFile(image.get(i));
 
-        ProductFile savedFile = fileUploadService.saveFile(image);
+            meal.setCalImg(savedFile.getOrgFileName());
+            meal.setCalImgStored(savedFile.getStoredFileName());
 
-        meal.setCalImg(savedFile.getOrgFileName());
-        meal.setCalImgStored(savedFile.getStoredFileName());
-
-        calendar.getMealList().add(0, meal);
+            calendar.getMealList().add(0, meal);
+        }
         calendarRepository.save(calendar);
         return "SUCCESS";
     }

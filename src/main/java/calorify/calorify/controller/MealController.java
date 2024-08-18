@@ -24,13 +24,13 @@ public class MealController {
     private final MealService mealService;
 
     @PostMapping("/save")
-    public Map<String, String> saveMeal(@RequestParam("image") MultipartFile image,
+    public Map<String, String> saveMeal(@RequestParam("image") List<MultipartFile> image,
                                         @RequestParam("nutrients") String nutrientsJson,
                                         @RequestParam("memId") String memId) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         List<NutritionDTO> nutrients = objectMapper.readValue(nutrientsJson, new TypeReference<List<NutritionDTO>>() {});
         log.info("************* MealController.java / method name : saveMeal / nutrients : {}", nutrients.size());
-        String result = mealService.saveMeal(image, nutrients.get(0), memId);
+        String result = mealService.saveMeal(image, nutrients, memId);
         return Map.of("RESULT", "SUCCESS");
     }
 
