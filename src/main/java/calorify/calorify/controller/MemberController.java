@@ -89,9 +89,9 @@ public class MemberController {
         return result;
     }
 
-    @GetMapping("/name")
-    public Boolean nameIsDuplicate(String name) {
-        return memberService.nameIsDuplicate(name);
+    @GetMapping("/{name}")
+    public Map<String, Boolean> nameIsDuplicate(@PathVariable("name") String name) {
+        return Map.of("RESULT", memberService.nameIsDuplicate(name));
     }
 
     @PutMapping("/{name}/{mid}")
