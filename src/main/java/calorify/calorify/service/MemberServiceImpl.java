@@ -46,7 +46,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public void modifyMember(String memId, MemberInfoDTO memberInfoDTO) {
-
+        Member member = memberRepository.findById(memId).orElse(null);
+        member.memberModifyInfo(memberInfoDTO);
+        memberRepository.save(member);
     }
 
     public Member getOne(String memId) {

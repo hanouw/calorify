@@ -77,4 +77,17 @@ public class Member {
         memberInfoDTO.setMemStatMsg(this.getMemStatMsg());
         return memberInfoDTO;
     }
+
+    public Member memberModifyInfo(MemberInfoDTO memberInfoDTO) {
+        this.memImg = memberInfoDTO.getMemImg();
+        this.memImgStored = memberInfoDTO.getMemImgStored();
+        this.memHeight = memberInfoDTO.getMemHeight();
+        this.memWeight = memberInfoDTO.getMemWeight();
+        this.memBirth = memberInfoDTO.getMemBirth();
+        this.memEmail = memberInfoDTO.getMemEmail();
+        this.memNickname = memberInfoDTO.getMemNickname();
+        this.memSex = memberInfoDTO.getMemSex();
+        this.memStatMsg = memberInfoDTO.getMemStatMsg();
+        return this;
+    }
 }
