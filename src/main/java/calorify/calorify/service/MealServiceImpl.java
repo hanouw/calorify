@@ -92,4 +92,11 @@ public class MealServiceImpl implements MealService{
                 .collect(Collectors.groupingBy(Meal::getCalMealNum)) // CalMealNum으로 그룹화
                 .values()); // Map의 값들만을 List로 변환
     }
+
+    @Override
+    public void deleteOneMeal(String calDate, Long calMealNum, String memId) {
+        Calendar calendar = calendarRepository.findCalendarByMemId(memId);
+        calendar.getMealList().removeIf(m -> m.getCalDate().toString().equals(calDate) && m.getCalMealNum() == calMealNum);
+        calendarRepository.save(calendar);
+    }
 }
