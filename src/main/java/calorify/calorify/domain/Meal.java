@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 public class Meal {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mealId; // 캘린더 식별번호
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "mem_id")
     private Member member; // 회원식별정보 FK
     private LocalDateTime calDate; // 날짜
     private String calImg; // 이미지

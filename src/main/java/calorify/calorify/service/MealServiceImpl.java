@@ -1,9 +1,11 @@
 package calorify.calorify.service;
 
 import calorify.calorify.domain.Meal;
+import calorify.calorify.domain.Member;
 import calorify.calorify.domain.ProductFile;
 import calorify.calorify.dto.NutritionDTO;
 import calorify.calorify.repository.MealRepository;
+import calorify.calorify.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class MealServiceImpl implements MealService{
 
     private final FileUploadService fileUploadService;
     private final MealRepository mealRepository;
+    private final MemberRepository memberRepository;
 
     // yyyy-MM-dd'T'HH:mm 형식으로 포맷터 생성
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -38,6 +41,7 @@ public class MealServiceImpl implements MealService{
         // 입력된 날짜 문자열을 LocalDateTime으로 변환
         LocalDateTime inputDateTime = LocalDateTime.parse(date, formatter);
 
+        Member member = memberRepository.findById(memId).orElse(null);
         List<Meal> mealList = mealRepository.findByMemId(memId);
 
         // date와 날짜가 같은 리스트 추출 && 시간순으로 정렬
@@ -58,7 +62,7 @@ public class MealServiceImpl implements MealService{
             Meal meal = new Meal().dtoToEntity(nutrient);
             meal.setCalDate(inputDateTime);
             meal.setCalMealNum(nowIndex);
-
+            meal.setMember(member);
             meal.setCalImg(savedFile.getOrgFileName());
             meal.setCalImgStored(savedFile.getStoredFileName());
 
@@ -84,10 +88,15 @@ public class MealServiceImpl implements MealService{
         List<Meal> mealByMemId = mealRepository.findByMemId(memId);
 
         // MealList를 CalMealNum으로 그룹화하고, 그 결과를 List<List<Meal>>로 변환
-        return new ArrayList<>(mealByMemId.stream()
+        ArrayList<List<Meal>> lists = new ArrayList<>(mealByMemId.stream()
                 .filter(a -> Objects.equals(a.getCalDate().format(DateFormatter), date))
                 .collect(Collectors.groupingBy(Meal::getCalMealNum)) // CalMealNum으로 그룹화
-                .values()); // Map의 값들만을 List로 변환
+                .values());// Map의 값들만을 List로 변환
+
+        log.info("************* MealServiceImpl.java / method name : getMealByDate / lists : {}", lists.size());
+        log.info("************* MealServiceImpl.java / method name : getMealByDate / lists : {}", lists);
+
+        return lists;
     }
 
     @Override
