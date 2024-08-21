@@ -10,9 +10,11 @@ import java.util.Map;
 public interface MemberService {
     Map<String, String> save(MemberForm memberForm);
 
+    Member getOne(String memId);
+
     MemberInfoDTO getMemberInfo(String memId);
 
-    Member getOne(String memId);
+    void modifyMember(String memId, MemberInfoDTO memberInfoDTO);
 
     Boolean nameIsDuplicate(String name);
 

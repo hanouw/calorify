@@ -44,6 +44,11 @@ public class MemberServiceImpl implements MemberService{
         return member.MemberToInfo();
     }
 
+    @Override
+    public void modifyMember(String memId, MemberInfoDTO memberInfoDTO) {
+
+    }
+
     public Member getOne(String memId) {
         Optional<Member> memberOptional = memberRepository.findById(memId);
         return memberOptional.orElse(null);

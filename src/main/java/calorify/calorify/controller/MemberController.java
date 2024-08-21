@@ -89,8 +89,11 @@ public class MemberController {
     }
 
 
-//    @PutMapping("/{mid}") // 회원 수정
-//    public Map<String, String> modifyMember(@PathVariable String mid, @RequestBody )
+    @PutMapping("/{mid}") // 회원 수정
+    public Map<String, String> modifyMember(@PathVariable String mid, @RequestBody MemberInfoDTO memberInfoDTO){
+        memberService.modifyMember(mid, memberInfoDTO);
+        return Map.of("RESULT", "SUCCESS");
+    }
 
     @GetMapping("/{name}")
     public Map<String, Boolean> nameIsDuplicate(@PathVariable("name") String name) {

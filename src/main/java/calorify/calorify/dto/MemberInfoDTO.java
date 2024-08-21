@@ -2,6 +2,8 @@ package calorify.calorify.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @Setter
 @Getter
@@ -16,4 +18,5 @@ public class MemberInfoDTO {
     private String memStatMsg; //상태 메세지
     private String memImg; //회원 프로필 사진
     private String memImgStored; //회원 프로필 사진 저장이름
+    private LocalDateTime memBirth; //생년월일
 }
