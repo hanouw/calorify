@@ -11,5 +11,5 @@ import java.util.List;
 public interface MealService {
     String saveMeal(MultipartFile image, List<NutritionDTO> nutrients, String memId, String date) throws IOException;
     List<List<Meal>> getMealByDate(String memId, String date);
-    void deleteOneMeal(String calDate, Long calMealNum, String memId);
+    void deleteOneMeal(String calDate, String calMealNum, String memId);
 }

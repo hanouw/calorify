@@ -94,9 +94,9 @@ public class MealServiceImpl implements MealService{
     }
 
     @Override
-    public void deleteOneMeal(String calDate, Long calMealNum, String memId) {
+    public void deleteOneMeal(String calDate, String calMealNum, String memId) {
         Calendar calendar = calendarRepository.findCalendarByMemId(memId);
-        calendar.getMealList().removeIf(m -> m.getCalDate().toString().equals(calDate) && m.getCalMealNum() == calMealNum);
+        calendar.getMealList().removeIf(m -> m.getCalDate().toString().equals(calDate) && m.getCalMealNum() == Integer.parseInt(calMealNum));
         calendarRepository.save(calendar);
     }
 }

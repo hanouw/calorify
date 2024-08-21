@@ -42,7 +42,7 @@ public class MealController {
     }
 
     @DeleteMapping("/delete")
-    public Map<String, String> deleteOneMeal(@RequestParam String calDate,@RequestParam Long calMealNum, @RequestParam String memId){
+    public Map<String, String> deleteOneMeal(@RequestParam String calDate,@RequestParam String calMealNum, @RequestParam String memId){
         mealService.deleteOneMeal(calDate, calMealNum, memId);
         return Map.of("RESULT", "SUCCESS");
     }
