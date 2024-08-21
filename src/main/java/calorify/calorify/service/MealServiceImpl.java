@@ -9,6 +9,7 @@ import calorify.calorify.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -100,7 +101,9 @@ public class MealServiceImpl implements MealService{
     }
 
     @Override
+    @Transactional
     public void deleteOneMeal(String mealId, String memId) {
-        mealRepository.deleteMealByMealId(Long.parseLong(mealId));
+        int removedNum = mealRepository.deleteMealByMealId(Long.parseLong(mealId));
+        log.info("************* MealServiceImpl.java / method name : deleteOneMeal / removedNum : {}", removedNum);
     }
 }
