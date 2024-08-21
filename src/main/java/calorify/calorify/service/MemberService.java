@@ -3,17 +3,17 @@ package calorify.calorify.service;
 import calorify.calorify.domain.Member;
 import calorify.calorify.dto.MemberDTO;
 import calorify.calorify.dto.MemberForm;
+import calorify.calorify.dto.MemberInfoDTO;
 
 import java.util.Map;
 
 public interface MemberService {
     Map<String, String> save(MemberForm memberForm);
 
-    Member getOne(String memId);
+    MemberInfoDTO getMemberInfo(String memId);
 
-    String delete(Long mid);
+    Member getOne(String memId);
 
     Boolean nameIsDuplicate(String name);
 
-    String nameAdd(String name, Long mid);
 }

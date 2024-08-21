@@ -4,6 +4,7 @@ import calorify.calorify.domain.Calendar;
 import calorify.calorify.domain.Member;
 import calorify.calorify.dto.MemberDTO;
 import calorify.calorify.dto.MemberForm;
+import calorify.calorify.dto.MemberInfoDTO;
 import calorify.calorify.repository.CalendarRepository;
 import calorify.calorify.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
@@ -37,14 +38,15 @@ public class MemberServiceImpl implements MemberService{
         return Map.of("success", saved.getMemId());
     }
 
+    @Override
+    public MemberInfoDTO getMemberInfo(String memId) {
+        Member member = memberRepository.findById(memId).orElse(null);
+        return member.MemberToInfo();
+    }
+
     public Member getOne(String memId) {
         Optional<Member> memberOptional = memberRepository.findById(memId);
         return memberOptional.orElse(null);
-    }
-
-    @Override
-    public String delete(Long mid) {
-        return null;
     }
 
     @Override
@@ -53,8 +55,4 @@ public class MemberServiceImpl implements MemberService{
         return id.isPresent();
     }
 
-    @Override
-    public String nameAdd(String name, Long mid) {
-        return null;
-    }
 }

@@ -1,14 +1,13 @@
 package calorify.calorify.controller;
 
 import calorify.calorify.domain.Member;
-import calorify.calorify.dto.MemberDTO;
 import calorify.calorify.dto.MemberForm;
+import calorify.calorify.dto.MemberInfoDTO;
 import calorify.calorify.service.MemberService;
 import calorify.calorify.util.CustomJWTException;
 import calorify.calorify.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -83,22 +82,19 @@ public class MemberController {
         return result;
     }
 
-    @DeleteMapping("/{mid}") // 회원 탈퇴
-    public String delete(@PathVariable("mid") Long mid) {
-        String result = memberService.delete(mid);
-        return result;
+    @GetMapping("/mem-info/{mid}")
+    public Map<String, MemberInfoDTO> getMemberInfo(@PathVariable String mid){
+        MemberInfoDTO memberInfo = memberService.getMemberInfo(mid);
+        return Map.of("RESULT", memberInfo);
     }
+
+
+//    @PutMapping("/{mid}") // 회원 수정
+//    public Map<String, String> modifyMember(@PathVariable String mid, @RequestBody )
 
     @GetMapping("/{name}")
     public Map<String, Boolean> nameIsDuplicate(@PathVariable("name") String name) {
         return Map.of("RESULT", memberService.nameIsDuplicate(name));
-    }
-
-    @PutMapping("/{name}/{mid}")
-    public String nameAdd(@PathVariable("name") String name, @PathVariable("mid") Long mid) {
-        log.info("************nameAdd name:{}, mid:{}", name, mid);
-        String result = memberService.nameAdd(name, mid);
-        return result;
     }
 
 }
