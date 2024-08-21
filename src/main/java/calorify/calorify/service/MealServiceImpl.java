@@ -1,17 +1,15 @@
 package calorify.calorify.service;
 
-import calorify.calorify.domain.Calendar;
 import calorify.calorify.domain.Meal;
 import calorify.calorify.domain.ProductFile;
 import calorify.calorify.dto.NutritionDTO;
-import calorify.calorify.repository.CalendarRepository;
+import calorify.calorify.repository.MealRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ import java.util.stream.Collectors;
 public class MealServiceImpl implements MealService{
 
     private final FileUploadService fileUploadService;
-    private final CalendarRepository calendarRepository;
+    private final MealRepository mealRepository;
 
     // yyyy-MM-dd'T'HH:mm 형식으로 포맷터 생성
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -40,8 +38,7 @@ public class MealServiceImpl implements MealService{
         // 입력된 날짜 문자열을 LocalDateTime으로 변환
         LocalDateTime inputDateTime = LocalDateTime.parse(date, formatter);
 
-        Calendar calendar = calendarRepository.findCalendarByMemId(memId);
-        List<Meal> mealList = calendar.getMealList();
+        List<Meal> mealList = mealRepository.findByMemId(memId);
 
         // date와 날짜가 같은 리스트 추출 && 시간순으로 정렬
         List<Meal> sameDateMeals = mealList.stream()
@@ -75,7 +72,7 @@ public class MealServiceImpl implements MealService{
             }
         }
 
-        calendarRepository.save(calendar);
+        mealRepository.saveAll(mealList);
         return "SUCCESS";
     }
 
@@ -84,19 +81,17 @@ public class MealServiceImpl implements MealService{
     public List<List<Meal>> getMealByDate(String memId, String date) {
         log.info("************* MealServiceImpl.java / method name : getMealByDate / memId : {}", memId);
         log.info("************* MealServiceImpl.java / method name : getMealByDate / date : {}", date);
-        Calendar calendarByMemId = calendarRepository.findCalendarByMemId(memId);
+        List<Meal> mealByMemId = mealRepository.findByMemId(memId);
 
         // MealList를 CalMealNum으로 그룹화하고, 그 결과를 List<List<Meal>>로 변환
-        return new ArrayList<>(calendarByMemId.getMealList().stream()
+        return new ArrayList<>(mealByMemId.stream()
                 .filter(a -> Objects.equals(a.getCalDate().format(DateFormatter), date))
                 .collect(Collectors.groupingBy(Meal::getCalMealNum)) // CalMealNum으로 그룹화
                 .values()); // Map의 값들만을 List로 변환
     }
 
     @Override
-    public void deleteOneMeal(String calDate, String calMealNum, String memId) {
-        Calendar calendar = calendarRepository.findCalendarByMemId(memId);
-        calendar.getMealList().removeIf(m -> m.getCalDate().toString().equals(calDate) && m.getCalMealNum() == Integer.parseInt(calMealNum));
-        calendarRepository.save(calendar);
+    public void deleteOneMeal(String mealId, String memId) {
+        mealRepository.deleteMealByMealId(Long.parseLong(mealId));
     }
 }

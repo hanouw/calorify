@@ -3,7 +3,6 @@ package calorify.calorify.controller;
 import calorify.calorify.domain.Meal;
 import calorify.calorify.dto.NutritionDTO;
 import calorify.calorify.service.MealService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +41,8 @@ public class MealController {
     }
 
     @DeleteMapping("/delete")
-    public Map<String, String> deleteOneMeal(@RequestParam String calDate,@RequestParam String calMealNum, @RequestParam String memId){
-        mealService.deleteOneMeal(calDate, calMealNum, memId);
+    public Map<String, String> deleteOneMeal(@RequestParam String mealId, @RequestParam String memId){
+        mealService.deleteOneMeal(mealId, memId);
         return Map.of("RESULT", "SUCCESS");
     }
 

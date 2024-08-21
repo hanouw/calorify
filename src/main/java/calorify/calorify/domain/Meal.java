@@ -1,17 +1,22 @@
 package calorify.calorify.domain;
 
 import calorify.calorify.dto.NutritionDTO;
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Entity
 @Getter
+@Builder
 @Setter
-@Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
 public class Meal {
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long mealId; // 캘린더 식별번호
+    @OneToOne
+    private Member member; // 회원식별정보 FK
     private LocalDateTime calDate; // 날짜
     private String calImg; // 이미지
     private String calImgStored; // 저장된 이미지명
@@ -30,7 +35,6 @@ public class Meal {
     private String calTra; // NUTR_CONT9 트랜스 지방산
     private String calServingWt; // SERVING_WT 1회 제공량
 
-
     public Meal dtoToEntity(NutritionDTO nutritionDTO){
         this.calFoodName = nutritionDTO.getDESC_KOR();
         this.calAnimalPlant = nutritionDTO.getANIMAL_PLANT();
@@ -48,5 +52,3 @@ public class Meal {
         return this;
     }
 }
-
-

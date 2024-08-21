@@ -1,11 +1,13 @@
 package calorify.calorify.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class NutritionDTO {
     @JsonProperty("ANIMAL_PLANT")
     private String ANIMAL_PLANT;
