@@ -2,6 +2,7 @@ package calorify.calorify.domain;
 
 import calorify.calorify.dto.MemberForm;
 import calorify.calorify.dto.MemberInfoDTO;
+import calorify.calorify.dto.MemberInfoModifyDataDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -67,6 +68,7 @@ public class Member {
 
     public MemberInfoDTO MemberToInfo() {
         MemberInfoDTO memberInfoDTO = new MemberInfoDTO();
+        memberInfoDTO.setMemBirth(this.getMemBirth());
         memberInfoDTO.setMemEmail(this.getMemEmail());
         memberInfoDTO.setMemHeight(this.getMemHeight());
         memberInfoDTO.setMemImg(this.getMemImg());
@@ -78,16 +80,10 @@ public class Member {
         return memberInfoDTO;
     }
 
-    public Member memberModifyInfo(MemberInfoDTO memberInfoDTO) {
-        this.memImg = memberInfoDTO.getMemImg();
-        this.memImgStored = memberInfoDTO.getMemImgStored();
+    public void memberModifyInfo(MemberInfoModifyDataDTO memberInfoDTO) {
         this.memHeight = memberInfoDTO.getMemHeight();
         this.memWeight = memberInfoDTO.getMemWeight();
-        this.memBirth = memberInfoDTO.getMemBirth();
-        this.memEmail = memberInfoDTO.getMemEmail();
         this.memNickname = memberInfoDTO.getMemNickname();
-        this.memSex = memberInfoDTO.getMemSex();
         this.memStatMsg = memberInfoDTO.getMemStatMsg();
-        return this;
     }
 }

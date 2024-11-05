@@ -4,6 +4,7 @@ import calorify.calorify.domain.Meal;
 import calorify.calorify.domain.Member;
 import calorify.calorify.dto.MemberForm;
 import calorify.calorify.dto.MemberInfoDTO;
+import calorify.calorify.dto.MemberInfoModifyDataDTO;
 import calorify.calorify.repository.MealRepository;
 import calorify.calorify.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
@@ -36,7 +37,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void modifyMember(String memId, MemberInfoDTO memberInfoDTO) {
+    public void modifyMember(String memId, MemberInfoModifyDataDTO memberInfoDTO) {
         Member member = memberRepository.findById(memId).orElse(null);
         member.memberModifyInfo(memberInfoDTO);
         memberRepository.save(member);

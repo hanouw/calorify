@@ -3,6 +3,7 @@ package calorify.calorify.controller;
 import calorify.calorify.domain.Member;
 import calorify.calorify.dto.MemberForm;
 import calorify.calorify.dto.MemberInfoDTO;
+import calorify.calorify.dto.MemberInfoModifyDataDTO;
 import calorify.calorify.service.MemberService;
 import calorify.calorify.util.CustomJWTException;
 import calorify.calorify.util.JWTUtil;
@@ -90,7 +91,8 @@ public class MemberController {
 
 
     @PutMapping("/{mid}") // 회원 수정
-    public Map<String, String> modifyMember(@PathVariable String mid, @RequestBody MemberInfoDTO memberInfoDTO){
+    public Map<String, String> modifyMember(@PathVariable String mid, @RequestBody MemberInfoModifyDataDTO memberInfoDTO){
+        log.info("************* MemberController.java / method name : modifyMember / memberInfoDTO : {}", memberInfoDTO);
         memberService.modifyMember(mid, memberInfoDTO);
         return Map.of("RESULT", "SUCCESS");
     }
