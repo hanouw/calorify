@@ -41,7 +41,7 @@ iamport:
 file:
   #  dir: /Users/name/Documents/file/
   #  dir: C:\file\file\
-  dir: ~/images
+  dir: ~/calorifyReact/calorifyreact/public/assets/saved/
 
 jwt:
   key: SGVsbG9Kc29uV2ViVG9rZW5BdXRoZW50aWNhdGlvbktleVdpdGhTcHJpbmdCb29rUHJvamVjdFNlY3JldEtleQ
