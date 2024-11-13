@@ -1,7 +1,7 @@
 # DB setting
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/calorify?useUnicode=true&characterEncoding=UTF-8&characterSetResult=UTF-8&useSSL=true
+    url: jdbc:mysql://3.39.76.255:3306/calorify?useUnicode=true&characterEncoding=UTF-8&characterSetResult=UTF-8&useSSL=true
     username: root
     password: 1234
   servlet:
@@ -41,7 +41,7 @@ iamport:
 file:
   #  dir: /Users/name/Documents/file/
   #  dir: C:\file\file\
-  dir: C:\aaa_yonsei\Projects\calorifyreact\public\assets\saved\
+  dir: ~/images
 
 jwt:
   key: SGVsbG9Kc29uV2ViVG9rZW5BdXRoZW50aWNhdGlvbktleVdpdGhTcHJpbmdCb29rUHJvamVjdFNlY3JldEtleQ
